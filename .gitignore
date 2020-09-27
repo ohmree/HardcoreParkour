@@ -8,7 +8,8 @@
 .import/
 export.cfg
 # We need this file for github CI
-#export_presets.cfg
+export_presets.cfg
+# Apparently not
 
 # Imported translations (automatically generated from CSV files)
 *.translation
