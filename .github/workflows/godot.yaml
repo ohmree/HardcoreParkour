@@ -14,9 +14,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           lfs: true
+      - name: Debug
+        run: pwd
       - name: Build
         id: build
-        run: pwd
         uses: josephbmanley/build-godot-action@v1.4.0
         with:
           name: HardcoreParkour
