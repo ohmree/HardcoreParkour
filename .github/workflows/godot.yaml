@@ -18,7 +18,7 @@ jobs:
         id: build
         uses: josephbmanley/build-godot-action@v1.4.0
         with:
-          name: example
+          name: HardcoreParkour
           preset: ${{ matrix.platform }}
           debugMode: "false"
       - name: Upload Artifact
