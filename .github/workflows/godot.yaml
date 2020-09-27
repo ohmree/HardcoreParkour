@@ -1,0 +1,31 @@
+name: Build HardcoreParkour
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: croconut/godot-multi-builder@v1
+      with:
+      #comma separated export presets
+        names: "HTML5"
+        # defaults to true, Android currently only exports to debug
+        debug-mode: "false"
+        # outputs to path-to-game/builds/builds.zip
+        # if run multiple times, you can use the step's output variable
+        # to retrieve the separate builds.zip files
+        # if any zip files are too big for your purposes, unzipping is
+        # likely your best bet
+    - run: |
+          unzip ./builds/builds.zip
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+          git add ./builds/*
+          git reset -- ./builds/builds.zip
+          git commit -m 'Builds generated'
+          git push --force
