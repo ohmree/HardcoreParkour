@@ -16,6 +16,7 @@ jobs:
           lfs: true
       - name: Build
         id: build
+        run: pwd
         uses: josephbmanley/build-godot-action@v1.4.0
         with:
           name: HardcoreParkour
