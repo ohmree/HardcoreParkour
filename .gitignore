@@ -7,7 +7,8 @@
 # Godot-specific ignores
 .import/
 export.cfg
-export_presets.cfg
+# We need this file for github CI
+#export_presets.cfg
 
 # Imported translations (automatically generated from CSV files)
 *.translation
