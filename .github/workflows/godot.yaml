@@ -1,31 +1,28 @@
-name: Build HardcoreParkour
+name: Build Godot Project
 
 on:
-  push:
-    branches:
-    - master
+  push: {}
+  pull_request: {}
 
 jobs:
-  build:
+  Godot:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [html5]
     steps:
-    - uses: actions/checkout@v2
-    - uses: croconut/godot-multi-builder@v1
-      with:
-      #comma separated export presets
-        names: "HTML5"
-        # defaults to true, Android currently only exports to debug
-        debug-mode: "false"
-        # outputs to path-to-game/builds/builds.zip
-        # if run multiple times, you can use the step's output variable
-        # to retrieve the separate builds.zip files
-        # if any zip files are too big for your purposes, unzipping is
-        # likely your best bet
-    - run: |
-          unzip ./tester/builds/builds.zip
-          git config user.email github-actions@github.com
-          git config user.name github-actions
-          git add ./tester/builds/*
-          git reset -- ./tester/builds/builds.zip
-          git commit -m 'Builds generated'
-          git push --force
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Build
+        id: build
+        uses: josephbmanley/build-godot-action@v1.4.0
+        with:
+          name: example
+          preset: ${{ matrix.platform }}
+          debugMode: "false"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Client - ${{ matrix.platform }}
+          path: ${{ github.workspace }}/${{ steps.build.outputs.build }}
