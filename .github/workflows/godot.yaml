@@ -15,7 +15,7 @@ jobs:
         with:
           lfs: true
       - name: Debug
-        run: pwd
+        run: pwd && ls
       - name: Build
         id: build
         uses: josephbmanley/build-godot-action@v1.4.0
